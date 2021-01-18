@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Movie Database</title>
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+</head>
+<body>
+    <div id="app" class="container">
+        <h3 class="pb-3 mb-4 font-italic border-bottom">
+           {{appTitle}}
+        </h3>
+
+        <!-- Single Movie -->
+        <h2>Movie Search</h2>
+
+         <input type="text" v-model="keyword">
+            <button @click = "getMovie()">Search</button>
+
+            
+            <tr v-for="movie in movieList">
+              
+            </tr>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+                   <div class="card-body d-flex flex-column align-items-start">
+                      <strong class="d-inline-block mb-2 text-primary">{{movie.Type}}</strong>
+                      <h2 class="mb-0">
+                         <a class="text-dark" href="#">{{movie.Title}}</a>
+                      </h2>
+                      <label for="">Year</label>
+                      <div class="mb-1 text-muted small">{{movie.Year}}</div>
+                      <label for="">Plot</label>
+                      <p class="card-text mb-auto">{{movie.Plot}}</p>
+                      
+                     
+                      
+                      <a class="btn btn-primary btn-sm" @click="gotoImdb(movie.imdbID)">Continue Reading in IMDB</a>
+                   </div>
+                   <img class="card-img-right flex-auto d-lg-block" alt="Thumbnail [200x250]" :src="movie.Poster" style="width: 400px; height: 500px;">
+                </div>
+             </div>
+        </div>
+        
+
+              <!-- Template for Movie List -->
+              <h2>Search Movie List View</h2>
+
+              <ul>
+                  <li v-for="movie in movieList">
+                     <div>{{movie}}</div>
+                     </li>
+              </ul>
+             
+
+              <div class="row">
+                 <div class="col-md-6">
+                    <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+                       <div class="card-body d-flex flex-column align-items-start">
+                          <strong class="d-inline-block mb-2 text-primary">{{movie.Title}}</strong>
+                          <h6 class="mb-0">
+                             <a class="text-dark" href="#">40 Percent of People Can’t Afford Basics</a>
+                          </h6>
+                          <div class="mb-1 text-muted small">Nov 12</div>
+                          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                          <a class="btn btn-outline-primary btn-sm" href="http://www.jquery2dotnet.com/">View details</a>
+                       </div>
+                       <img class="card-img-right flex-auto d-none d-lg-block" alt="Thumbnail [200x250]" src="//placeimg.com/250/250/arch" style="width: 200px; height: 250px;">
+                    </div>
+                 </div>
+                 <div class="col-md-6">
+                    <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+                       <div class="card-body d-flex flex-column align-items-start">
+                          <strong class="d-inline-block mb-2 text-success">Health</strong>
+                          <h6 class="mb-0">
+                             <a class="text-dark" href="#">Food for Thought: Diet and Brain Health</a>
+                          </h6>
+                          <div class="mb-1 text-muted small">Nov 11</div>
+                          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                          <a class="btn btn-outline-success btn-sm" href="http://www.jquery2dotnet.com/">View details</a>
+                       </div>
+                       <img class="card-img-right flex-auto d-none d-lg-block" alt="Thumbnail [200x250]" src="//placeimg.com/250/250/nature" style="width: 200px; height: 250px;">
+                    </div>
+                 </div>
+                 <div class="col-md-6">
+                  <div class="card border-primary flex-md-row mb-4 shadow-sm h-md-250">
+                     <div class="card-body d-flex flex-column align-items-start">
+                        <strong class="d-inline-block mb-2 text-primary">World</strong>
+                        <h6 class="mb-0">
+                           <a class="text-dark" href="#">40 Percent of People Can’t Afford Basics</a>
+                        </h6>
+                        <div class="mb-1 text-muted small">Nov 12</div>
+                        <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                        <a class="btn btn-outline-primary btn-sm" href="http://www.jquery2dotnet.com/">View details</a>
+                     </div>
+                     <img class="card-img-right flex-auto d-none d-lg-block" alt="Thumbnail [200x250]" src="//placeimg.com/250/250/arch" style="width: 200px; height: 250px;">
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="card border-success flex-md-row mb-4 shadow-sm h-md-250">
+                     <div class="card-body d-flex flex-column align-items-start">
+                        <strong class="d-inline-block mb-2 text-success">Health</strong>
+                        <h6 class="mb-0">
+                           <a class="text-dark" href="#">Food for Thought: Diet and Brain Health</a>
+                        </h6>
+                        <div class="mb-1 text-muted small">Nov 11</div>
+                        <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                        <a class="btn btn-outline-success btn-sm" href="http://www.jquery2dotnet.com/">View details</a>
+                     </div>
+                     <img class="card-img-right flex-auto d-none d-lg-block" alt="Thumbnail [200x250]" src="//placeimg.com/250/250/nature" style="width: 200px; height: 250px;">
+                  </div>
+               </div>
+              </div>
+      
+           </div>
+
+
+    <script src="js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script>
+
+
+
+        var openMovieApp = new Vue({
+            el: "#app",
+            data: {
+               //http://www.omdbapi.com/?apikey=6aa63769&i=tt0499549
+
+               //http://www.omdbapi.com/?i=tt0499549
+                baseUrl: "http://www.omdbapi.com",
+                apiKey: "6aa63769", // Get your API key here: http://www.omdbapi.com/apikey.aspx
+                appTitle: "Open Movie Database",
+                keyword: "",
+                movieList: [],
+                movie: {},
+            },
+            methods: {
+                getMovie: function() {
+   
+                    axios.get(this.baseUrl + "?apikey=" + this.apiKey + "&t=" + this.keyword)
+                        .then(response => {
+                            this.movie = response.data;
+                        });
+                },
+
+                searchMovie: function(){
+                  let movieId = "tt0499549"; // Avatar - James Cameron
+                    axios.get(this.baseUrl + "?apikey=" + this.apiKey + "&i=" + movieId)
+                        .then(response => {
+                            this.movie = response.data;
+                   })
+                },
+
+
+
+
+
+                gotoImdb: function(imdbID) {
+                   window.location.href = "https://www.imdb.com/title/" + imdbID;
+                }
+            },
+            mounted: function() {
+                this.searchMovie();
+            }
+        })
+    </script>
+</body>
+</html>
